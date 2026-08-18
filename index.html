@@ -526,59 +526,11 @@
           <p>A modern cab booking interface where users can enter pickup and drop locations, choose a cab type, view an estimated fare, and confirm a booking through an interactive browser-based demo.</p>
           <div class="tech-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
           <div class="proj-cta">
-            <button type="button" class="btn view" data-toggle="demo-cab">View Project ↗</button>
+            <a href="cab-booking.html" class="btn view">View Project ↗</a>
             <span class="proj-note">interactive browser demo</span>
           </div>
         </div>
-        <div class="demo-drawer" id="demo-cab">
-          <div class="cab-demo-head">
-            <div>
-              <strong>Book Your Ride</strong>
-              <span>Enter your trip details to get an instant estimate.</span>
-            </div>
-            <span class="cab-pill">● Available</span>
-          </div>
-          <form id="cabForm" novalidate>
-            <div class="form-grid">
-              <div class="field full">
-                <label for="cabPickup">Pickup location</label>
-                <input id="cabPickup" type="text" placeholder="e.g. Hislop College, Nagpur">
-                <span class="field-err" id="err-cabPickup"></span>
-              </div>
-              <div class="field full">
-                <label for="cabDrop">Drop location</label>
-                <input id="cabDrop" type="text" placeholder="e.g. Nagpur Railway Station">
-                <span class="field-err" id="err-cabDrop"></span>
-              </div>
-              <div class="field">
-                <label for="cabType">Cab type</label>
-                <select id="cabType">
-                  <option value="Mini">Mini — ₹12/km</option>
-                  <option value="Sedan">Sedan — ₹16/km</option>
-                  <option value="SUV">SUV — ₹21/km</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="cabDistance">Estimated distance</label>
-                <select id="cabDistance">
-                  <option value="4">4 km</option>
-                  <option value="7">7 km</option>
-                  <option value="10">10 km</option>
-                  <option value="15">15 km</option>
-                  <option value="20">20 km</option>
-                </select>
-              </div>
-            </div>
-            <div class="cab-summary">
-              <div><span>Estimated fare</span><strong id="cabFare">₹48</strong></div>
-              <div><span>ETA</span><strong id="cabEta">4 min</strong></div>
-            </div>
-            <div class="submit-row">
-              <button type="submit" class="btn submit">Confirm Booking</button>
-            </div>
-          </form>
-          <div class="cab-success" id="cabSuccess"></div>
-        </div>
+
       </div>
 
     <div class="soft-band reveal" style="margin-top:60px;">
@@ -783,46 +735,6 @@
     });
   }
 
-  // Cab booking demo
-  const cabType = document.getElementById('cabType');
-  const cabDistance = document.getElementById('cabDistance');
-  const cabFare = document.getElementById('cabFare');
-  const cabEta = document.getElementById('cabEta');
-  const cabForm = document.getElementById('cabForm');
-  const cabSuccess = document.getElementById('cabSuccess');
-
-  function updateCabFare(){
-    const rates = {Mini:12, Sedan:16, SUV:21};
-    const distance = Number(cabDistance.value);
-    const fare = 30 + rates[cabType.value] * distance;
-    cabFare.textContent = '₹' + fare;
-    cabEta.textContent = Math.max(3, Math.round(distance * .8)) + ' min';
-  }
-  if(cabType && cabDistance){
-    cabType.addEventListener('change', updateCabFare);
-    cabDistance.addEventListener('change', updateCabFare);
-    updateCabFare();
-  }
-  if(cabForm){
-    cabForm.addEventListener('submit', function(e){
-      e.preventDefault();
-      const pickup = document.getElementById('cabPickup').value.trim();
-      const drop = document.getElementById('cabDrop').value.trim();
-      setErr('cabPickup', pickup.length < 2 ? 'Enter your pickup location.' : '');
-      setErr('cabDrop', drop.length < 2 ? 'Enter your drop location.' : '');
-      if(pickup.length < 2 || drop.length < 2){
-        cabSuccess.classList.remove('show');
-        return;
-      }
-      const bookingId = 'JZ' + Math.floor(100000 + Math.random() * 900000);
-      cabSuccess.innerHTML =
-        '<strong>✓ Booking confirmed</strong><br>' +
-        'Booking ID: <b>' + bookingId + '</b> · ' +
-        cabType.value + ' · ' + cabDistance.value + ' km · ' + cabFare.textContent + '<br>' +
-        'Pickup: ' + pickup + '<br>Drop: ' + drop;
-      cabSuccess.classList.add('show');
-    });
-  }
 
 </script>
 
