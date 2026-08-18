@@ -207,6 +207,33 @@
   .empty-row td{text-align:center; color:var(--text-dim); font-size:11.5px; padding:18px;}
   .db-count{font-size:11px; color:var(--text-dim); margin-bottom:10px; display:block;}
 
+  /* ---------- cab booking demo ---------- */
+  .proj-thumb.cab{
+    background:
+      radial-gradient(circle at 78% 25%, rgba(62,123,250,.30), transparent 34%),
+      linear-gradient(135deg,#111F3A,#0A0D13 72%);
+  }
+  .cab-visual{width:82%; position:relative; text-align:center;}
+  .cab-car{font-size:54px; filter:drop-shadow(0 12px 20px rgba(62,123,250,.25)); animation:carFloat 2.8s ease-in-out infinite;}
+  .route-line{height:2px;background:var(--line);margin:4px 18px 8px;position:relative;display:flex;justify-content:space-between;align-items:center;}
+  .route-line::after{content:"";position:absolute;left:12%;right:12%;height:2px;background:linear-gradient(90deg,var(--blue),#7FA8FF);opacity:.75;}
+  .route-line span{width:7px;height:7px;border-radius:50%;background:var(--blue);z-index:1;}
+  .route-line i{width:7px;height:7px;border-radius:50%;background:#8FE3B8;z-index:1;}
+  .cab-label{font-family:var(--f-head);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--text);margin-top:7px;}
+  .cab-status{font-size:10px;color:#8FE3B8;margin-top:5px;letter-spacing:.08em;}
+  @keyframes carFloat{50%{transform:translateY(-5px)}}
+  .cab-demo-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px;}
+  .cab-demo-head strong{display:block;font-family:var(--f-head);font-size:15px;margin-bottom:3px;}
+  .cab-demo-head span:not(.cab-pill){display:block;color:var(--text-dim);font-size:11px;}
+  .cab-pill{font-size:10px!important;color:#8FE3B8!important;border:1px solid rgba(143,227,184,.25);padding:6px 9px;border-radius:100px;white-space:nowrap;}
+  .cab-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .cab-summary>div{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px;}
+  .cab-summary span{display:block;color:var(--text-dim);font-size:10px;margin-bottom:3px;}
+  .cab-summary strong{font-family:var(--f-head);font-size:16px;}
+  .cab-success{display:none;margin-top:14px;padding:13px;border:1px solid rgba(143,227,184,.25);background:rgba(143,227,184,.06);border-radius:9px;color:#8FE3B8;font-size:12px;line-height:1.6;}
+  .cab-success.show{display:block;}
+  @media(max-width:600px){.cab-demo-head{align-items:flex-start;flex-direction:column}.cab-pill{align-self:flex-start}}
+
   /* ---------- soft skills ---------- */
   .soft-band{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:28px 0;}
   .soft-band .chips{display:flex; flex-wrap:wrap; gap:10px;}
@@ -486,29 +513,73 @@
       </div>
 
       <div class="proj-card reveal">
-        <div class="proj-thumb db">
-          <div class="mock"><span class="k">CREATE TABLE</span> students (<br>&nbsp;&nbsp;id <span class="s">PK</span>,<br>&nbsp;&nbsp;name, course_id <span class="s">FK</span><br>);<br><span class="s">✓ CRUD ready</span></div>
-        </div>
-        <div class="proj-body">
-          <h3>College Students Database</h3>
-          <p>A structured relational database for college student records using MySQL, with student details, courses, enrollment, primary/foreign keys, and CRUD operations.</p>
-          <div class="tech-tags"><span>MySQL</span></div>
-          <div class="proj-cta">
-            <a href="projects/student-registration/index.html" class="btn view" target="_blank" rel="noopener">
-    View Project ↗
-</a>
-            <span class="proj-note">runs in your browser</span>
+        <div class="proj-thumb cab">
+          <div class="cab-visual">
+            <div class="cab-car">🚕</div>
+            <div class="route-line"><span></span><i></i><span></span></div>
+            <div class="cab-label">CAB BOOKING</div>
+            <div class="cab-status">● LIVE DEMO</div>
           </div>
         </div>
-        <div class="demo-drawer" id="demo-db">
-          <span class="db-count" id="dbCount">0 rows</span>
-          <table class="db">
-            <thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Year</th><th></th></tr></thead>
-            <tbody id="dbBody"></tbody>
-          </table>
+        <div class="proj-body">
+          <h3>Online Cab Booking System</h3>
+          <p>A modern cab booking interface where users can enter pickup and drop locations, choose a cab type, view an estimated fare, and confirm a booking through an interactive browser-based demo.</p>
+          <div class="tech-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+          <div class="proj-cta">
+            <button type="button" class="btn view" data-toggle="demo-cab">View Project ↗</button>
+            <span class="proj-note">interactive browser demo</span>
+          </div>
+        </div>
+        <div class="demo-drawer" id="demo-cab">
+          <div class="cab-demo-head">
+            <div>
+              <strong>Book Your Ride</strong>
+              <span>Enter your trip details to get an instant estimate.</span>
+            </div>
+            <span class="cab-pill">● Available</span>
+          </div>
+          <form id="cabForm" novalidate>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="cabPickup">Pickup location</label>
+                <input id="cabPickup" type="text" placeholder="e.g. Hislop College, Nagpur">
+                <span class="field-err" id="err-cabPickup"></span>
+              </div>
+              <div class="field full">
+                <label for="cabDrop">Drop location</label>
+                <input id="cabDrop" type="text" placeholder="e.g. Nagpur Railway Station">
+                <span class="field-err" id="err-cabDrop"></span>
+              </div>
+              <div class="field">
+                <label for="cabType">Cab type</label>
+                <select id="cabType">
+                  <option value="Mini">Mini — ₹12/km</option>
+                  <option value="Sedan">Sedan — ₹16/km</option>
+                  <option value="SUV">SUV — ₹21/km</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cabDistance">Estimated distance</label>
+                <select id="cabDistance">
+                  <option value="4">4 km</option>
+                  <option value="7">7 km</option>
+                  <option value="10">10 km</option>
+                  <option value="15">15 km</option>
+                  <option value="20">20 km</option>
+                </select>
+              </div>
+            </div>
+            <div class="cab-summary">
+              <div><span>Estimated fare</span><strong id="cabFare">₹48</strong></div>
+              <div><span>ETA</span><strong id="cabEta">4 min</strong></div>
+            </div>
+            <div class="submit-row">
+              <button type="submit" class="btn submit">Confirm Booking</button>
+            </div>
+          </form>
+          <div class="cab-success" id="cabSuccess"></div>
         </div>
       </div>
-    </div>
 
     <div class="soft-band reveal" style="margin-top:60px;">
       <div class="chips"><span>Problem Solving</span><span>Quick Learner</span><span>Teamwork</span><span>Communication</span><span>Time Management</span><span>Adaptability</span></div>
@@ -668,26 +739,22 @@
     });
   });
 
-  // shared in-memory database
-  let students = [{ id: 1, name: 'Sample Student', course: 'BCA', year: '2nd Year' }];
-  let nextId = 2;
-  function renderDb(){
-    const body = document.getElementById('dbBody');
-    document.getElementById('dbCount').textContent = students.length + (students.length===1 ? ' row' : ' rows');
-    if(students.length === 0){ body.innerHTML = '<tr class="empty-row"><td colspan="5">no records</td></tr>'; return; }
-    body.innerHTML = students.slice().reverse().map(function(s){
-      return '<tr><td>'+s.id+'</td><td>'+s.name+'</td><td>'+s.course+'</td><td>'+s.year+'</td><td><button class="rowbtn" data-id="'+s.id+'">delete</button></td></tr>';
-    }).join('');
-    body.querySelectorAll('.rowbtn').forEach(function(b){
-      b.addEventListener('click', function(){ students = students.filter(s => s.id !== Number(b.dataset.id)); renderDb(); });
+  // project demo toggles
+  document.querySelectorAll('[data-toggle]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const panel = document.getElementById(btn.dataset.toggle);
+      const isOpen = panel.classList.toggle('open');
+      btn.textContent = isOpen ? 'Hide Project ↑' : 'View Project ↗';
     });
-  }
-  renderDb();
+  });
 
-  // registration validation -> feeds db
+  // Student registration validation
   const form = document.getElementById('regForm');
   const sqlOut = document.getElementById('sqlOut');
-  function setErr(f,msg){ document.getElementById('err-'+f).textContent = msg || ''; }
+  function setErr(f,msg){
+    const el = document.getElementById('err-'+f);
+    if(el) el.textContent = msg || '';
+  }
   if(form){
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -696,7 +763,7 @@
         fEmail: document.getElementById('fEmail').value,
         fPhone: document.getElementById('fPhone').value,
         fCourse: document.getElementById('fCourse').value,
-        fYear: document.getElementById('fYear').value,
+        fYear: document.getElementById('fYear').value
       };
       let ok = true;
       if(!data.fName || data.fName.trim().length < 2){ setErr('fName','Enter at least 2 characters.'); ok=false; } else setErr('fName','');
@@ -706,17 +773,57 @@
       if(!data.fYear){ setErr('fYear','Select a year.'); ok=false; } else setErr('fYear','');
       if(!ok){ sqlOut.classList.remove('show'); return; }
 
-      const record = { id: nextId++, name: data.fName.trim(), course: data.fCourse, year: data.fYear };
-      students.push(record);
-      renderDb();
       sqlOut.classList.add('show');
-      sqlOut.innerHTML = '<span class="ok">-- validation passed</span>\n' +
-        'INSERT INTO students (id, name, email, phone, course, year)\n' +
-        "VALUES (" + record.id + ", '" + record.name + "', '" + data.fEmail + "', '" + data.fPhone + "', '" + record.course + "', '" + record.year + "');\n" +
-        '<span class="ok">-- 1 row inserted. see it in the database project ↑</span>';
+      sqlOut.innerHTML =
+        '<span class="ok">-- validation passed</span>\n' +
+        'INSERT INTO students (name, email, phone, course, year)\n' +
+        "VALUES ('" + data.fName.trim() + "', '" + data.fEmail + "', '" + data.fPhone + "', '" + data.fCourse + "', '" + data.fYear + "');\n" +
+        '<span class="ok">-- registration submitted successfully</span>';
       form.reset();
     });
   }
+
+  // Cab booking demo
+  const cabType = document.getElementById('cabType');
+  const cabDistance = document.getElementById('cabDistance');
+  const cabFare = document.getElementById('cabFare');
+  const cabEta = document.getElementById('cabEta');
+  const cabForm = document.getElementById('cabForm');
+  const cabSuccess = document.getElementById('cabSuccess');
+
+  function updateCabFare(){
+    const rates = {Mini:12, Sedan:16, SUV:21};
+    const distance = Number(cabDistance.value);
+    const fare = 30 + rates[cabType.value] * distance;
+    cabFare.textContent = '₹' + fare;
+    cabEta.textContent = Math.max(3, Math.round(distance * .8)) + ' min';
+  }
+  if(cabType && cabDistance){
+    cabType.addEventListener('change', updateCabFare);
+    cabDistance.addEventListener('change', updateCabFare);
+    updateCabFare();
+  }
+  if(cabForm){
+    cabForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const pickup = document.getElementById('cabPickup').value.trim();
+      const drop = document.getElementById('cabDrop').value.trim();
+      setErr('cabPickup', pickup.length < 2 ? 'Enter your pickup location.' : '');
+      setErr('cabDrop', drop.length < 2 ? 'Enter your drop location.' : '');
+      if(pickup.length < 2 || drop.length < 2){
+        cabSuccess.classList.remove('show');
+        return;
+      }
+      const bookingId = 'JZ' + Math.floor(100000 + Math.random() * 900000);
+      cabSuccess.innerHTML =
+        '<strong>✓ Booking confirmed</strong><br>' +
+        'Booking ID: <b>' + bookingId + '</b> · ' +
+        cabType.value + ' · ' + cabDistance.value + ' km · ' + cabFare.textContent + '<br>' +
+        'Pickup: ' + pickup + '<br>Drop: ' + drop;
+      cabSuccess.classList.add('show');
+    });
+  }
+
 </script>
 
 </body>
